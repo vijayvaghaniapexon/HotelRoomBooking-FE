@@ -1,4 +1,5 @@
-import { Badge, Button, Card, Pagination, Table } from 'react-bootstrap'
+import { Badge, Button, Card, Table } from 'react-bootstrap'
+import TablePagination from '../../components/TablePagination'
 import type { Hotel } from './types'
 
 const renderStars = (count: number) => '★'.repeat(count) + '☆'.repeat(5 - count)
@@ -37,7 +38,6 @@ function HotelTable({ hotels, currentPage, itemsPerPage, onPageChange, onEdit, o
                 <th>City</th>
                 <th>Rating</th>
                 <th>Manager</th>
-                <th>Description</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -55,7 +55,6 @@ function HotelTable({ hotels, currentPage, itemsPerPage, onPageChange, onEdit, o
                   <td>📍 {hotel.city}</td>
                   <td><span className="star-badge">{renderStars(hotel.starRating)}</span></td>
                   <td><Badge bg="info" text="dark">{hotel.managerId}</Badge></td>
-                  <td className="text-truncate" style={{ maxWidth: '200px' }}>{hotel.description}</td>
                   <td>
                     <div className="table-actions">
                       <Button size="sm" variant="outline-primary" onClick={() => onEdit(hotel)}>Edit</Button>
@@ -67,29 +66,7 @@ function HotelTable({ hotels, currentPage, itemsPerPage, onPageChange, onEdit, o
             </tbody>
           </Table>
         )}
-        {totalPages > 1 && (
-          <div className="d-flex justify-content-center py-3">
-            <Pagination className="mb-0">
-              <Pagination.Prev
-                disabled={currentPage === 1}
-                onClick={() => onPageChange(currentPage - 1)}
-              />
-              {Array.from({ length: totalPages }, (_, i) => (
-                <Pagination.Item
-                  key={i + 1}
-                  active={currentPage === i + 1}
-                  onClick={() => onPageChange(i + 1)}
-                >
-                  {i + 1}
-                </Pagination.Item>
-              ))}
-              <Pagination.Next
-                disabled={currentPage === totalPages}
-                onClick={() => onPageChange(currentPage + 1)}
-              />
-            </Pagination>
-          </div>
-        )}
+        <TablePagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />
       </Card.Body>
     </Card>
   )
