@@ -1,6 +1,6 @@
 import type { SyntheticEvent } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
-import type { Hotel } from './types'
+import type { Hotel } from '../../types'
 
 interface HotelFormModalProps {
   show: boolean

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Badge, Card, Table } from 'react-bootstrap'
-import TablePagination from '../../components/TablePagination'
-import type { Booking } from './types'
+import { TablePagination } from '../common'
+import type { Booking } from '../../types'
 
 interface BookingTableProps {
   bookings: Booking[]

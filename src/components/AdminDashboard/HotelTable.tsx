@@ -1,6 +1,6 @@
 import { Badge, Button, Card, Table } from 'react-bootstrap'
-import TablePagination from '../../components/TablePagination'
-import type { Hotel } from './types'
+import { TablePagination } from '../common'
+import type { Hotel } from '../../types'
 
 const renderStars = (count: number) => '★'.repeat(count) + '☆'.repeat(5 - count)
 

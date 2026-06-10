@@ -1,6 +1,6 @@
 import type { SyntheticEvent } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
-import type { Room } from './types'
+import type { Room } from '../../types'
 
 interface RoomFormModalProps {
   show: boolean
