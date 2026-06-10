@@ -3,12 +3,12 @@ import { useState } from 'react'
 import { Button, Card, Col, Container, Row } from 'react-bootstrap'
 import './AdminDashboard.css'
 import { emptyHotel, initialHotels } from './data'
+import type { Hotel } from '../../types'
 import DeleteConfirmModal from './DeleteConfirmModal'
 import HotelFormModal from './HotelFormModal'
 import HotelTable from './HotelTable'
-import type { Hotel } from './types'
 
-function AdminDashboard() {
+function AdminDashboardContainer() {
   const [hotels, setHotels] = useState<Hotel[]>(initialHotels)
   const [formState, setFormState] = useState<Hotel>(emptyHotel)
   const [isEditing, setIsEditing] = useState(false)
@@ -116,4 +116,4 @@ function AdminDashboard() {
   )
 }
 
-export default AdminDashboard
+export default AdminDashboardContainer

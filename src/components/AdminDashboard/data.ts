@@ -1,4 +1,4 @@
-import type { Hotel } from './types'
+import type { Hotel } from '../../types'
 
 export const initialHotels: Hotel[] = [
   {

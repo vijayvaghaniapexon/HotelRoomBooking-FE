@@ -1,4 +1,4 @@
-import type { Booking, Room } from './types'
+import type { Booking, Room } from '../../types'
 
 export const initialRooms: Room[] = [
   {

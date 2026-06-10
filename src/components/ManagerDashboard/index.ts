@@ -1,0 +1,5 @@
+export { default as BookingTable } from './BookingTable'
+export { default as DeleteConfirmModal } from './DeleteConfirmModal'
+export { default as ManagerDashboardContainer } from './ManagerDashboardContainer'
+export { default as RoomFormModal } from './RoomFormModal'
+export { default as RoomTable } from './RoomTable'

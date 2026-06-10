@@ -1,6 +1,6 @@
 import { Badge, Button, Card, Table } from 'react-bootstrap'
-import TablePagination from '../../components/TablePagination'
-import type { Room } from './types'
+import { TablePagination } from '../common'
+import type { Room } from '../../types'
 
 interface RoomTableProps {
   rooms: Room[]
