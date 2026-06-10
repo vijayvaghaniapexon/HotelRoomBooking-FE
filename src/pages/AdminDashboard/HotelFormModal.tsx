@@ -22,7 +22,7 @@ function HotelFormModal({ show, isEditing, formState, onChange, onSave, onClose 
           <Row className="g-3">
             <Col md={6}>
               <Form.Group controlId="hotelName">
-                <Form.Label>Name</Form.Label>
+                <Form.Label>Name <span className="text-danger">*</span></Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter hotel name"
@@ -34,7 +34,7 @@ function HotelFormModal({ show, isEditing, formState, onChange, onSave, onClose 
             </Col>
             <Col md={6}>
               <Form.Group controlId="hotelCity">
-                <Form.Label>City</Form.Label>
+                <Form.Label>City <span className="text-danger">*</span></Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="City or location"
@@ -59,7 +59,7 @@ function HotelFormModal({ show, isEditing, formState, onChange, onSave, onClose 
             </Col>
             <Col md={4}>
               <Form.Group controlId="hotelManager">
-                <Form.Label>Manager ID</Form.Label>
+                <Form.Label>Manager ID <span className="text-danger">*</span></Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="e.g. MGR-123"
