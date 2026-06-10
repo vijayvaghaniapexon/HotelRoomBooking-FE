@@ -1,7 +1,7 @@
 import type { SyntheticEvent } from 'react'
 import { useState } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
 import FeatureHighlights from './FeatureHighlights'
 import SearchPanel from './SearchPanel'
@@ -19,6 +19,9 @@ function HomeContainer() {
 
   return (
     <div className="home-page">
+      <Link to="/login" className="login-link-top-right text-decoration-none">
+        <Button variant="secondary" className="login-btn-subtle">Login</Button>
+      </Link>
       <Container>
         <div className="home-hero">
           <h1>🏨 Find Your Perfect Stay</h1>
