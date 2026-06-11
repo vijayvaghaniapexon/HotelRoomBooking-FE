@@ -256,6 +256,48 @@
   font-size: 2.3rem;
   font-weight: 800;
   box-shadow: 0 14px 30px rgba(47, 158, 115, 0.42);
+  animation: bookingCheckSpinIn 0.7s cubic-bezier(0.2, 0.8, 0.3, 1.2) both;
+}
+
+.booking-success-check svg {
+  display: block;
+}
+
+.booking-success-check-path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 60;
+  animation: bookingCheckDraw 0.55s ease-out 0.55s forwards;
+}
+
+@keyframes bookingCheckSpinIn {
+  0% {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.4);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(15deg) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes bookingCheckDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .booking-success-check {
+    animation: none;
+  }
+  .booking-success-check-path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
 }
 
 .booking-success-card h2 {
@@ -293,6 +335,29 @@
   font-weight: 700;
 }
 
+.booking-id-pill .booking-id-value {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', ui-monospace, monospace;
+  font-size: 1rem;
+}
+
+.booking-id-pill .booking-id-copy-btn {
+  border: none;
+  background: #0b6f82;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.booking-id-pill .booking-id-copy-btn:hover {
+  background: #095e6e;
+  transform: translateY(-1px);
+}
+
 .booking-success-details {
   text-align: left;
   background: #f8fcfd;
@@ -317,6 +382,37 @@
 .booking-success-row .value {
   color: #143e48;
   font-weight: 700;
+}
+
+.booking-success-row.total {
+  margin-top: 0.4rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed #cfe3e8;
+  font-size: 1rem;
+}
+
+.booking-success-row.total .value {
+  color: #0b6f82;
+  font-size: 1.1rem;
+  font-weight: 800;
+}
+
+@media print {
+  .booking-page {
+    background: #fff !important;
+    padding: 0 !important;
+    color: #000 !important;
+  }
+  .booking-back-btn,
+  .booking-success-actions,
+  .booking-id-pill .booking-id-copy-btn {
+    display: none !important;
+  }
+  .booking-success-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc;
+    margin: 0 auto;
+  }
 }
 
 .booking-success-actions {

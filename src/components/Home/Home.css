@@ -236,35 +236,151 @@
 .home-features {
   position: relative;
   z-index: 1;
-  margin-top: 2.5rem;
-  padding-bottom: 3.2rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.1rem;
+  max-width: 980px;
+  margin: 2.6rem auto 0;
+  padding: 0 0.25rem 3.2rem;
   animation: fadeSlideUp 0.95s ease;
 }
 
-.feature-item {
-  text-align: center;
-  color: rgba(255, 255, 255, 0.9);
-  background: rgba(7, 32, 39, 0.5);
+.feature-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 1.35rem 1.4rem 1.45rem;
+  border-radius: 20px;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
   border: 1px solid rgba(215, 241, 249, 0.22);
-  border-radius: 16px;
-  padding: 1rem 0.6rem;
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 14px 32px rgba(6, 26, 32, 0.32);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 }
 
-.feature-icon {
-  font-size: 1.9rem;
-  margin-bottom: 0.5rem;
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    155deg,
+    rgba(255, 255, 255, 0.45),
+    rgba(255, 255, 255, 0) 60%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  z-index: 1;
 }
 
-.feature-item h6 {
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 0.25rem;
+.feature-card::after {
+  content: '';
+  position: absolute;
+  bottom: -55%;
+  right: -25%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0.55;
+  z-index: 0;
+  transition: transform 0.45s ease, opacity 0.45s ease;
 }
 
-.feature-item p {
-  font-size: 0.86rem;
-  color: rgba(255, 255, 255, 0.74);
+.feature-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(215, 241, 249, 0.4);
+  box-shadow: 0 22px 44px rgba(6, 26, 32, 0.45);
+}
+
+.feature-card:hover::after {
+  transform: scale(1.15);
+  opacity: 0.85;
+}
+
+.feature-card--price {
+  --accent: #2f9e73;
+  --accent-soft: rgba(47, 158, 115, 0.22);
+  --accent-glow: rgba(47, 158, 115, 0.55);
+}
+
+.feature-card--rated {
+  --accent: #f5b454;
+  --accent-soft: rgba(245, 180, 84, 0.22);
+  --accent-glow: rgba(239, 131, 84, 0.55);
+}
+
+.feature-card--secure {
+  --accent: #5dc6e0;
+  --accent-soft: rgba(93, 198, 224, 0.22);
+  --accent-glow: rgba(15, 142, 165, 0.55);
+}
+
+.feature-icon-wrap {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-soft);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.feature-icon-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 18px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  opacity: 0.55;
+  filter: blur(8px);
+  z-index: -1;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover .feature-icon-glow {
+  opacity: 0.85;
+}
+
+.feature-icon-svg {
+  display: inline-flex;
+}
+
+.feature-title {
+  font-weight: 800;
+  font-size: 1.02rem;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+.feature-desc {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(232, 248, 253, 0.78);
+  margin: 0;
 }
 
 @keyframes fadeSlideDown {
@@ -368,6 +484,13 @@
 
   .home-features {
     row-gap: 0.75rem;
+    grid-template-columns: 1fr;
+    margin-top: 1.8rem;
+    padding-bottom: 2.4rem;
+  }
+
+  .feature-card {
+    padding: 1.1rem 1.15rem 1.2rem;
   }
 }
 
@@ -378,7 +501,11 @@
   .home-hero h1,
   .home-hero p,
   .search-panel,
-  .home-features {
+  .home-features,
+  .feature-card,
+  .feature-card::after,
+  .feature-icon-glow {
     animation: none !important;
+    transition: none !important;
   }
 }

@@ -1,9 +1,12 @@
 import type { Dispatch } from 'redux'
-import { createBooking } from '../../api/hotelApi'
+import { createBooking, getBookingById } from '../../api/hotelApi'
 import {
     BOOKING_CREATE_FAILURE,
     BOOKING_CREATE_REQUEST,
     BOOKING_CREATE_SUCCESS,
+    BOOKING_FETCH_FAILURE,
+    BOOKING_FETCH_REQUEST,
+    BOOKING_FETCH_SUCCESS,
     BOOKING_RESET,
 } from './actionTypes'
 
@@ -34,6 +37,20 @@ export const createBookingAction = (params: CreateBookingParams) => {
       const message =
         error instanceof Error ? error.message : 'Unable to confirm booking'
       dispatch({ type: BOOKING_CREATE_FAILURE, payload: message })
+    }
+  }
+}
+
+export const fetchBookingAction = (bookingId: string) => {
+  return async (dispatch: Dispatch) => {
+    dispatch({ type: BOOKING_FETCH_REQUEST })
+    try {
+      const data = await getBookingById(bookingId)
+      dispatch({ type: BOOKING_FETCH_SUCCESS, payload: data })
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Unable to load booking'
+      dispatch({ type: BOOKING_FETCH_FAILURE, payload: message })
     }
   }
 }

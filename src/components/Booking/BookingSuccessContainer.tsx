@@ -1,23 +1,40 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { resetBookingAction } from '../../redux/booking/actions'
+import {
+    fetchBookingAction,
+    resetBookingAction,
+} from '../../redux/booking/actions'
 import type { RootState } from '../../redux/rootReducer'
+import { EmptyState, Loader } from '../common'
 import './Booking.css'
+
+const formatBookedOn = (iso: string): string => {
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return iso
+  return d.toLocaleString(undefined, {
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  })
+}
 
 const BookingSuccessContainer = () => {
   const { bookingId = '' } = useParams<{ bookingId: string }>()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [copied, setCopied] = useState(false)
 
-  const { confirmation } = useSelector((state: RootState) => state.booking)
+  const { confirmation, fetching, error } = useSelector(
+    (state: RootState) => state.booking,
+  )
 
   useEffect(() => {
-    if (!confirmation || confirmation.bookingId !== bookingId) {
-      navigate('/', { replace: true })
+    if (!bookingId) return
+    if (confirmation?.bookingId !== bookingId) {
+      dispatch(fetchBookingAction(bookingId) as never)
     }
-  }, [confirmation, bookingId, navigate])
+  }, [dispatch, bookingId, confirmation])
 
   const handleDone = () => {
     dispatch(resetBookingAction())
@@ -29,14 +46,77 @@ const BookingSuccessContainer = () => {
     navigate('/hotels')
   }
 
-  if (!confirmation) return null
+  const handleCopyId = async () => {
+    if (!confirmation) return
+    try {
+      await navigator.clipboard.writeText(confirmation.bookingId)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1800)
+    } catch {
+      setCopied(false)
+    }
+  }
+
+  const handlePrint = () => {
+    globalThis.print()
+  }
+
+  if (fetching) {
+    return (
+      <div className="booking-page">
+        <Container>
+          <Loader />
+        </Container>
+      </div>
+    )
+  }
+
+  if (!confirmation) {
+    return (
+      <div className="booking-page">
+        <Container>
+          <EmptyState
+            title="Booking not found"
+            message={
+              error ||
+              "We couldn't locate this booking. It may have expired or the link is incorrect."
+            }
+          />
+          <div className="booking-success-actions" style={{ marginTop: '1.4rem' }}>
+            <Button className="btn-primary" onClick={() => navigate('/')}>
+              Back to home
+            </Button>
+          </div>
+        </Container>
+      </div>
+    )
+  }
 
   return (
     <div className="booking-page">
       <Container>
         <div className="booking-success-card">
           <div className="booking-success-check" aria-hidden="true">
-            ✓
+            <svg viewBox="0 0 52 52" width="44" height="44">
+              <circle
+                className="booking-success-check-circle"
+                cx="26"
+                cy="26"
+                r="24"
+                fill="none"
+                stroke="rgba(255,255,255,0.35)"
+                strokeWidth="2"
+              />
+              <path
+                className="booking-success-check-path"
+                fill="none"
+                stroke="#ffffff"
+                strokeWidth="5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M14 27 L23 36 L39 18"
+              />
+            </svg>
           </div>
           <h2>Booking confirmed!</h2>
           <p className="booking-success-msg">
@@ -48,7 +128,15 @@ const BookingSuccessContainer = () => {
 
           <div className="booking-id-pill">
             <span className="booking-id-label">Booking ID</span>
-            {confirmation.bookingId}
+            <span className="booking-id-value">{confirmation.bookingId}</span>
+            <button
+              type="button"
+              className="booking-id-copy-btn"
+              onClick={handleCopyId}
+              aria-label="Copy booking ID"
+            >
+              {copied ? '✓ Copied' : 'Copy'}
+            </button>
           </div>
 
           <div className="booking-success-details">
@@ -77,6 +165,10 @@ const BookingSuccessContainer = () => {
               </span>
             </div>
             <div className="booking-success-row">
+              <span className="label">Booked on</span>
+              <span className="value">{formatBookedOn(confirmation.createdAt)}</span>
+            </div>
+            <div className="booking-success-row total">
               <span className="label">Total paid</span>
               <span className="value">
                 ₹{confirmation.total.toLocaleString()}
@@ -85,6 +177,9 @@ const BookingSuccessContainer = () => {
           </div>
 
           <div className="booking-success-actions">
+            <Button className="btn-outline" onClick={handlePrint}>
+              Print receipt
+            </Button>
             <Button className="btn-outline" onClick={handleBrowseMore}>
               Browse more hotels
             </Button>
