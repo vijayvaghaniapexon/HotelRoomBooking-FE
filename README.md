@@ -1,73 +1,34 @@
-# React + TypeScript + Vite
+# 🏨 Hotel Room Booking — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive hotel booking single-page application built with **React 19 + TypeScript + Vite**, styled with **React-Bootstrap** and custom CSS, and powered by **Redux** for state management. The app currently runs on a mocked API layer so the full user flow can be demonstrated without a backend.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- 🔍 **Smart search** — find hotels by city with check-in / check-out date filtering.
+- 🏨 **Hotel listings** — clickable cards with cover image, star rating, price-per-night and city.
+- 📄 **Hotel detail page** — description, amenities, gallery and available room types filtered by selected dates.
+- 🛏 **Room selection** — per-room pricing, bed configuration, occupancy, amenity chips and availability badges.
+- 💳 **Booking flow** — review stay, see live total (subtotal + 12% taxes), enter guest details, confirm.
+- ✅ **Booking confirmation** — auto-generated Booking ID, persisted to `localStorage`.
+- 🔐 **Mock authentication** — login / register / forgot password / OTP flows (UI scaffolding).
+- 🧑‍💼 **Dashboards** — Admin (hotels CRUD) and Manager (rooms + bookings) screens with tables, modals and pagination.
+- 🎨 **Polished UI** — animated home page, gradient themes, glass-style empty states, fully responsive.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Layer            | Tools                                                |
+| ---------------- | ---------------------------------------------------- |
+| Framework        | React 19, TypeScript 6, Vite 8                       |
+| Routing          | React Router v7                                      |
+| State management | Redux + Redux Thunk                                  |
+| UI               | React-Bootstrap 2, Bootstrap 5, custom CSS modules   |
+| HTTP             | Axios (configured, mocked for now)                   |
+| Linting          | ESLint 10 + typescript-eslint + react-hooks plugins  |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📁 Project Structure
