@@ -9,7 +9,7 @@ interface AuthLayoutProps {
   footer?: ReactNode
 }
 
-export function AuthLayout({ title, subtitle, children, footer }: AuthLayoutProps) {
+export const AuthLayout = ({ title, subtitle, children, footer }: AuthLayoutProps) => {
   return (
     <div className="auth-page">
       <Container>

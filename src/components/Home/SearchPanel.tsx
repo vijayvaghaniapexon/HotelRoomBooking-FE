@@ -11,19 +11,19 @@ interface SearchPanelProps {
   onSearch: (e: SyntheticEvent<HTMLFormElement>) => void
 }
 
-function SearchPanel({
+const SearchPanel = ({
   query, checkIn, checkOut,
   onQueryChange, onCheckInChange, onCheckOutChange, onSearch,
-}: SearchPanelProps) {
+}: Readonly<SearchPanelProps>) => {
   return (
     <Card className="search-card">
       <Card.Body>
         <Form onSubmit={onSearch}>
           <Form.Group className="mb-3">
-            <Form.Label>Hotel Name / City</Form.Label>
+            <Form.Label>Where you want to go, To start your trip ?</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter hotel name or city"
+              placeholder="Enter city"
               value={query}
               onChange={(e) => onQueryChange(e.target.value)}
               required

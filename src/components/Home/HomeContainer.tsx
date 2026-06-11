@@ -2,11 +2,11 @@ import type { SyntheticEvent } from 'react'
 import { useState } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
-import './Home.css'
 import FeatureHighlights from './FeatureHighlights'
+import './Home.css'
 import SearchPanel from './SearchPanel'
 
-function HomeContainer() {
+const HomeContainer = () => {
   const [query, setQuery] = useState('')
   const [checkIn, setCheckIn] = useState('')
   const [checkOut, setCheckOut] = useState('')
@@ -19,26 +19,46 @@ function HomeContainer() {
 
   return (
     <div className="home-page">
+      <div className="hero-orb hero-orb-one" />
+      <div className="hero-orb hero-orb-two" />
       <Link to="/login" className="login-link-top-right text-decoration-none">
         <Button variant="secondary" className="login-btn-subtle">Login</Button>
       </Link>
-      <Container>
+      <Container className="home-shell">
         <div className="home-hero">
-          <h1>🏨 Find Your Perfect Stay</h1>
-          <p>Discover and book the best hotels across hundreds of cities</p>
+          <span className="hero-chip">Trusted by 120k+ travelers</span>
+          <h1>Stay Anywhere. Book Smarter.</h1>
+          <p>Compare verified hotels, lock in great rates, and reserve your ideal room in minutes.</p>
+
+          <div className="hero-stats">
+            <div className="hero-stat-card">
+              <strong>4.8/5</strong>
+              <span>Guest rating</span>
+            </div>
+            <div className="hero-stat-card">
+              <strong>2,500+</strong>
+              <span>Cities covered</span>
+            </div>
+            <div className="hero-stat-card">
+              <strong>24/7</strong>
+              <span>Support team</span>
+            </div>
+          </div>
         </div>
 
         <Row className="justify-content-center search-panel">
-          <Col lg={8} xl={7}>
-            <SearchPanel
-              query={query}
-              checkIn={checkIn}
-              checkOut={checkOut}
-              onQueryChange={setQuery}
-              onCheckInChange={setCheckIn}
-              onCheckOutChange={setCheckOut}
-              onSearch={handleSearch}
-            />
+          <Col lg={10} xl={9}>
+            <div className="search-panel-frame">
+              <SearchPanel
+                query={query}
+                checkIn={checkIn}
+                checkOut={checkOut}
+                onQueryChange={setQuery}
+                onCheckInChange={setCheckIn}
+                onCheckOutChange={setCheckOut}
+                onSearch={handleSearch}
+              />
+            </div>
           </Col>
         </Row>
 

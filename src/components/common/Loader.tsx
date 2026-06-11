@@ -4,7 +4,7 @@ interface LoaderProps {
   variant?: string
 }
 
-function Loader({ variant = 'light' }: LoaderProps) {
+const Loader = ({ variant = 'light' }: LoaderProps) => {
   return (
     <div className="text-center py-5">
       <Spinner animation="border" variant={variant} />

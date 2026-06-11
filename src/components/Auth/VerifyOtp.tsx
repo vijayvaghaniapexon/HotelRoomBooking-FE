@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthLayout } from './AuthLayout'
 
-export function VerifyOtp() {
+export const VerifyOtp = () => {
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
   }

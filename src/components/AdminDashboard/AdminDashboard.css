@@ -1,35 +1,38 @@
 .admin-dashboard {
-  padding: 2.5rem 2rem;
+  padding: 2.2rem 1.4rem;
   min-height: 100vh;
-  background: #f0f2f5;
+  background:
+    radial-gradient(circle at 90% 8%, rgba(239, 131, 84, 0.12), transparent 26%),
+    radial-gradient(circle at 8% 88%, rgba(15, 142, 165, 0.13), transparent 28%),
+    #f2f8f9;
 }
 
 .admin-dashboard h1 {
   font-weight: 800;
-  color: #1a1a2e;
-  letter-spacing: -0.5px;
+  color: #1f353b;
+  letter-spacing: -0.02em;
 }
 
-/* Hero Card */
 .admin-dashboard .hero-card {
-  margin-bottom: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin-bottom: 1.8rem;
+  background: linear-gradient(135deg, #0c768a 0%, #095b6b 100%);
   color: #fff;
   border: none;
-  border-radius: 1.25rem;
+  border-radius: 1.2rem;
   overflow: hidden;
   position: relative;
-  animation: fadeSlideDown 0.6s ease;
+  animation: fadeSlideDown 0.55s ease;
+  box-shadow: 0 16px 34px rgba(11, 111, 130, 0.34);
 }
 
 .admin-dashboard .hero-card::before {
   content: '';
   position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 300px;
-  height: 300px;
-  background: rgba(255, 255, 255, 0.08);
+  top: -46%;
+  right: -16%;
+  width: 290px;
+  height: 290px;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
 }
 
@@ -38,35 +41,37 @@
 }
 
 .admin-dashboard .hero-card p {
-  opacity: 0.9;
+  opacity: 0.94;
 }
 
 .admin-dashboard .hero-card .btn-light {
-  border-radius: 2rem;
-  padding: 0.5rem 1.5rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 999px;
+  padding: 0.5rem 1.45rem;
+  color: #0b6f82;
+  font-weight: 700;
 }
 
 .admin-dashboard .hero-card .btn-light:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(9, 78, 92, 0.27);
 }
 
-/* Table Card */
 .admin-dashboard .card {
-  border: none;
+  border: 1px solid #d8e4e7;
   border-radius: 1rem;
   overflow: hidden;
+  box-shadow: 0 10px 24px rgba(18, 51, 58, 0.08);
 }
 
 .admin-dashboard .card-header {
   background: #fff;
-  border-bottom: 1px solid #eee;
-  font-weight: 600;
+  border-bottom: 1px solid #e6eef0;
+  font-weight: 700;
+  color: #29434a;
 }
 
 .admin-dashboard .table > thead {
-  background: linear-gradient(90deg, #343a40, #495057);
+  background: linear-gradient(90deg, #1f4a54, #2d6270);
   color: #fff;
 }
 
@@ -74,37 +79,36 @@
   border: none;
   padding: 0.85rem 1rem;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
 }
 
 .admin-dashboard .table > tbody > tr {
   vertical-align: middle;
   transition: all 0.25s ease;
-  animation: fadeIn 0.4s ease;
+  animation: fadeIn 0.36s ease;
+}
+
+.admin-dashboard .table > tbody > tr:hover {
+  background: #eef7f9;
 }
 
 .admin-dashboard .table td {
   vertical-align: middle;
-}
-
-.admin-dashboard .table > tbody > tr:hover {
-  background: #f8f0ff;
-  transform: scale(1.005);
-  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.08);
+  color: #2d444b;
 }
 
 .admin-dashboard .hotel-cover {
   height: 50px;
   width: 80px;
   object-fit: cover;
-  border-radius: 0.5rem;
+  border-radius: 0.6rem;
   transition: transform 0.3s ease;
 }
 
 .admin-dashboard .hotel-cover:hover {
-  transform: scale(1.15);
+  transform: scale(1.08);
 }
 
 .admin-dashboard .table-actions {
@@ -117,18 +121,13 @@
 }
 
 .admin-dashboard .table-actions .btn {
-  border-radius: 1.5rem;
+  border-radius: 999px;
   padding: 0.25rem 0.85rem;
   font-size: 0.8rem;
-  transition: all 0.2s ease;
-}
-
-.admin-dashboard .table-actions .btn:hover {
-  transform: translateY(-1px);
 }
 
 .admin-dashboard .star-badge {
-  color: #f5a623;
+  color: #ef8354;
   font-size: 1rem;
   letter-spacing: 1px;
 }
@@ -136,24 +135,18 @@
 .admin-dashboard .empty-state {
   text-align: center;
   padding: 4rem 0;
-  color: #6c757d;
-  font-size: 1.1rem;
-  animation: fadeIn 0.5s ease;
+  color: #698088;
+  font-size: 1.02rem;
 }
 
-/* Modal Styles */
 .modal-content {
-  border: none;
+  border: 1px solid #dbe8eb;
   border-radius: 1rem;
   overflow: hidden;
 }
 
-.modal.fade .modal-dialog {
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
 .modal-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #0c768a 0%, #095b6b 100%);
   color: #fff;
   border: none;
 }
@@ -163,24 +156,34 @@
 }
 
 .modal-footer {
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid #e8f0f2;
 }
 
 .modal-footer .btn {
-  border-radius: 2rem;
-  padding: 0.4rem 1.5rem;
+  border-radius: 999px;
+  padding: 0.4rem 1.4rem;
 }
 
-/* Delete Modal */
 .delete-modal .modal-header {
-  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  background: linear-gradient(135deg, #ee6f57, #d65a44);
 }
 
-/* Animations */
+.admin-dashboard .pagination .page-link {
+  border-radius: 0.5rem;
+  margin: 0 2px;
+  border: 1px solid #d6e3e6;
+  color: #0f8ea5;
+}
+
+.admin-dashboard .pagination .page-item.active .page-link {
+  background: linear-gradient(135deg, #0f8ea5, #0b6f82);
+  border-color: transparent;
+}
+
 @keyframes fadeSlideDown {
   from {
     opacity: 0;
-    transform: translateY(-20px);
+    transform: translateY(-16px);
   }
   to {
     opacity: 1;
@@ -189,33 +192,16 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: scale(1);
   }
 }
 
-.admin-dashboard .pagination .page-link {
-  border-radius: 0.5rem;
-  margin: 0 2px;
-  border: none;
-  color: #667eea;
-}
-
-.admin-dashboard .pagination .page-item.active .page-link {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  border: none;
-}
-
-.admin-dashboard .shadow-sm {
-  animation: scaleIn 0.4s ease;
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1.2rem 0.75rem;
+  }
 }

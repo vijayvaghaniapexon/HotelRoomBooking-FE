@@ -1,6 +1,6 @@
 import { Badge, Button, Card, Table } from 'react-bootstrap'
-import { TablePagination } from '../common'
 import type { Room } from '../../types'
+import { TablePagination } from '../common'
 
 interface RoomTableProps {
   rooms: Room[]
@@ -11,7 +11,7 @@ interface RoomTableProps {
   onDelete: (roomId: string) => void
 }
 
-function RoomTable({ rooms, currentPage, itemsPerPage, onPageChange, onEdit, onDelete }: RoomTableProps) {
+const RoomTable = ({ rooms, currentPage, itemsPerPage, onPageChange, onEdit, onDelete }: RoomTableProps) => {
   const totalPages = Math.ceil(rooms.length / itemsPerPage)
   const paginatedRooms = rooms.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 
