@@ -233,6 +233,225 @@
   background: linear-gradient(135deg, #0d8094 0%, #095e6e 100%);
 }
 
+/* ---------- Date Range Picker ---------- */
+.date-range-field {
+  position: relative;
+}
+
+.date-range-label {
+  display: block;
+  font-weight: 700;
+  color: #234149;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+
+.date-range-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: 52px;
+  padding: 0.7rem 1rem;
+  border-radius: 14px;
+  border: 1px solid #cadce0;
+  background: #fbfdfe;
+  color: #6f8a92;
+  font-size: 0.97rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.date-range-trigger:hover {
+  border-color: #0f8ea5;
+  background: #ffffff;
+}
+
+.date-range-trigger:focus-visible {
+  outline: none;
+  border-color: #0f8ea5;
+  box-shadow: 0 0 0 0.2rem rgba(15, 142, 165, 0.2);
+}
+
+.date-range-trigger.has-value {
+  color: #163b44;
+  background: #ffffff;
+  border-color: #aac8d0;
+}
+
+.date-range-icon {
+  flex-shrink: 0;
+  color: #0f8ea5;
+}
+
+.date-range-trigger-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date-range-caret {
+  flex-shrink: 0;
+  color: #7796a0;
+  transition: transform 0.2s ease;
+}
+
+.date-range-caret.open {
+  transform: rotate(180deg);
+}
+
+.date-range-popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: #ffffff;
+  border: 1px solid rgba(15, 142, 165, 0.18);
+  border-radius: 18px;
+  box-shadow: 0 24px 48px rgba(7, 31, 38, 0.28);
+  padding: 0.6rem 0.4rem 0.5rem;
+  animation: dateRangePopIn 0.18s ease;
+  --rdp-accent-color: #0f8ea5;
+  --rdp-accent-background-color: rgba(15, 142, 165, 0.12);
+  --rdp-range_middle-color: #0b6f82;
+  --rdp-range_middle-background-color: rgba(15, 142, 165, 0.14);
+  --rdp-range_start-color: #ffffff;
+  --rdp-range_start-background: #0f8ea5;
+  --rdp-range_end-color: #ffffff;
+  --rdp-range_end-background: #0f8ea5;
+  --rdp-today-color: #ef8354;
+  --rdp-day_button-border-radius: 10px;
+  --rdp-day-width: 40px;
+  --rdp-day-height: 40px;
+  --rdp-font-family: inherit;
+}
+
+.date-range-popover .rdp-root {
+  margin: 0;
+}
+
+.date-range-helper {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #0b6f82;
+  background: rgba(15, 142, 165, 0.1);
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  margin: 0.2rem 0.4rem 0.6rem;
+  text-align: center;
+  letter-spacing: 0.01em;
+}
+
+.date-range-popover .rdp-month_caption {
+  font-weight: 700;
+  color: #163b44;
+  padding: 0 0.5rem;
+}
+
+.date-range-popover .rdp-weekday {
+  color: #7796a0;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.date-range-popover .rdp-day_button {
+  font-weight: 600;
+  color: #234149;
+}
+
+.date-range-popover .rdp-day_button:hover {
+  background: rgba(15, 142, 165, 0.1);
+}
+
+.date-range-popover .rdp-selected .rdp-day_button {
+  font-weight: 700;
+}
+
+.date-range-popover .rdp-disabled .rdp-day_button {
+  color: #c3d0d4;
+  cursor: not-allowed;
+}
+
+.date-range-popover-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.8rem 0.2rem;
+  border-top: 1px solid #eef4f6;
+  margin-top: 0.3rem;
+}
+
+.date-range-link {
+  background: transparent;
+  border: none;
+  color: #0f8ea5;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+
+.date-range-link:hover {
+  background: rgba(15, 142, 165, 0.1);
+}
+
+.date-range-apply {
+  background: linear-gradient(135deg, #0f8ea5 0%, #0b6f82 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  box-shadow: 0 6px 14px rgba(15, 142, 165, 0.3);
+}
+
+.date-range-apply:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(15, 142, 165, 0.4);
+}
+
+.date-range-apply:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+@keyframes dateRangePopIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .date-range-popover {
+    left: -0.4rem;
+    right: -0.4rem;
+  }
+
+  .date-range-popover .rdp-months {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
 .home-features {
   position: relative;
   z-index: 1;
