@@ -7,5 +7,6 @@ export const API_ENDPOINTS = {
   },
   BOOKINGS: {
     CREATE: '/bookings',
+    DETAIL: (bookingId: string) => `/bookings/${bookingId}`,
   },
 }

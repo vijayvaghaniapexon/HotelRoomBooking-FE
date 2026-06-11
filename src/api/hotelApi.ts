@@ -115,3 +115,28 @@ export const createBooking = async (
     }, 700)
   })
 }
+
+export const getBookingById = async (
+  bookingId: string,
+): Promise<BookingConfirmation> => {
+  // TODO: Replace with real API call
+  // const response = await axiosInstance.get(API_ENDPOINTS.BOOKINGS.DETAIL(bookingId))
+  // return response.data
+
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        const raw = localStorage.getItem('hrb_bookings')
+        const list: BookingConfirmation[] = raw ? JSON.parse(raw) : []
+        const match = list.find((b) => b.bookingId === bookingId)
+        if (match) {
+          resolve(match)
+          return
+        }
+      } catch {
+        // fall through to not-found
+      }
+      reject(new Error('Booking not found'))
+    }, 350)
+  })
+}
