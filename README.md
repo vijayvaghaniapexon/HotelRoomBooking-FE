@@ -32,3 +32,21 @@ A modern, responsive hotel booking single-page application built with **React 19
 ---
 
 ## 📁 Project Structure
+src/
+├── api/ # Axios config, endpoints, mock API layer
+├── assets/ # Static assets
+├── components/ # Feature-grouped components
+│ ├── AdminDashboard/
+│ ├── Auth/ # Login, Register, ForgotPassword, VerifyOtp, AuthLayout
+│ ├── Booking/ # Confirm + Success containers
+│ ├── common/ # Loader, EmptyState, TablePagination
+│ ├── Home/ # Hero, search panel, feature highlights
+│ ├── HotelDetail/ # Detail container, RoomTypeCard, mock data
+│ ├── HotelList/ # List container, HotelCard, NoHotelsFound
+│ └── ManagerDashboard/
+├── pages/ # Route entry points
+├── redux/ # store, rootReducer, feature slices (hotel/, booking/)
+├── types/ # Shared TypeScript types
+├── utils/ # auth.ts (mock session) and helpers
+├── App.tsx
+└── main.tsx
