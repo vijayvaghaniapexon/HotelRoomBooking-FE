@@ -1,5 +1,6 @@
 import type { SyntheticEvent } from 'react'
-import { Button, Card, Col, Form, Row } from 'react-bootstrap'
+import { Button, Card, Form } from 'react-bootstrap'
+import DateRangeField from './DateRangeField'
 
 interface SearchPanelProps {
   query: string
@@ -15,10 +16,18 @@ const SearchPanel = ({
   query, checkIn, checkOut,
   onQueryChange, onCheckInChange, onCheckOutChange, onSearch,
 }: Readonly<SearchPanelProps>) => {
+  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
+    if (!checkIn || !checkOut) {
+      e.preventDefault()
+      return
+    }
+    onSearch(e)
+  }
+
   return (
     <Card className="search-card">
       <Card.Body>
-        <Form onSubmit={onSearch}>
+        <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Where you want to go, To start your trip ?</Form.Label>
             <Form.Control
@@ -30,31 +39,14 @@ const SearchPanel = ({
             />
           </Form.Group>
 
-          <Row>
-            <Col md={6}>
-              <Form.Group className="mb-4">
-                <Form.Label>Check-in Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  value={checkIn}
-                  onChange={(e) => onCheckInChange(e.target.value)}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-4">
-                <Form.Label>Check-out Date</Form.Label>
-                <Form.Control
-                  type="date"
-                  value={checkOut}
-                  onChange={(e) => onCheckOutChange(e.target.value)}
-                  min={checkIn}
-                  required
-                />
-              </Form.Group>
-            </Col>
-          </Row>
+          <div className="mb-4">
+            <DateRangeField
+              checkIn={checkIn}
+              checkOut={checkOut}
+              onCheckInChange={onCheckInChange}
+              onCheckOutChange={onCheckOutChange}
+            />
+          </div>
 
           <Button type="submit" className="w-100 search-btn">
             Search Hotels
