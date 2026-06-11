@@ -3,7 +3,7 @@ interface EmptyStateProps {
   message?: string
 }
 
-function EmptyState({ title, message }: EmptyStateProps) {
+const EmptyState = ({ title, message }: EmptyStateProps) => {
   return (
     <div className="empty-state">
       <h4>{title}</h4>

@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap'
 
-function FeatureHighlights() {
+const FeatureHighlights = () => {
   return (
     <Row className="justify-content-center home-features">
       <Col xs={4} md={3} className="feature-item">

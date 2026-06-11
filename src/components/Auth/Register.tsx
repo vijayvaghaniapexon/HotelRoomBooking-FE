@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthLayout } from './AuthLayout'
 
-export function Register() {
+export const Register = () => {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
 

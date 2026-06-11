@@ -6,7 +6,7 @@ interface TablePaginationProps {
   onPageChange: (page: number) => void
 }
 
-function TablePagination({ currentPage, totalPages, onPageChange }: TablePaginationProps) {
+const TablePagination = ({ currentPage, totalPages, onPageChange }: TablePaginationProps) => {
   if (totalPages <= 1) return null
 
   return (
