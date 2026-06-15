@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
+import { NavBar } from './components/common'
 import AdminDashboard from './pages/AdminDashboard'
 import BookingConfirm from './pages/BookingConfirm'
 import BookingSuccess from './pages/BookingSuccess'
@@ -9,12 +10,19 @@ import HotelDetail from './pages/HotelDetail'
 import HotelList from './pages/HotelList'
 import Login from './pages/Login'
 import ManagerDashboard from './pages/ManagerDashboard'
+import MyBookings from './pages/MyBookings'
 import Register from './pages/Register'
 import VerifyOtp from './pages/VerifyOtp'
 
-const App = () => {
+const HIDE_NAV_PATHS = ['/login', '/register', '/verify-otp', '/forgot-password']
+
+const AppShell = () => {
+  const location = useLocation()
+  const hideNav = HIDE_NAV_PATHS.includes(location.pathname)
+
   return (
-    <BrowserRouter>
+    <>
+      {!hideNav && <NavBar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/hotels" element={<HotelList />} />
@@ -27,6 +35,7 @@ const App = () => {
           path="/bookings/:bookingId/success"
           element={<BookingSuccess />}
         />
+        <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/manager" element={<ManagerDashboard />} />
         <Route path="/login" element={<Login />} />
@@ -35,6 +44,14 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+    </>
+  )
+}
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      <AppShell />
     </BrowserRouter>
   )
 }

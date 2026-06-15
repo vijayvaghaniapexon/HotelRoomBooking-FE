@@ -13,6 +13,8 @@ export interface BookingDraft {
   total: number
 }
 
+export type BookingStatus = 'CONFIRMED' | 'CANCELLED'
+
 export interface BookingConfirmation {
   bookingId: string
   hotelId: string
@@ -29,6 +31,7 @@ export interface BookingConfirmation {
   subtotal: number
   taxes: number
   total: number
-  status: 'CONFIRMED'
+  status: BookingStatus
   createdAt: string
+  cancelledAt?: string
 }

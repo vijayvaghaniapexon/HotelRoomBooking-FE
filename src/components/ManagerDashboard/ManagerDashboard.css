@@ -115,9 +115,9 @@
   display: flex;
   gap: 0.5rem;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: flex-start;
   white-space: nowrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .manager-dashboard .table-actions .btn {

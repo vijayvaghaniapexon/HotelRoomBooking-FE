@@ -82,25 +82,10 @@ const DateRangeField = ({
   }
 
   const handleSelect = (range: DateRange | undefined) => {
-    const prevFrom = draft?.from
-    const prevTo = draft?.to
-    const hadCompleteRange = Boolean(prevFrom && prevTo)
-    const nextFrom = range?.from
-    const nextTo = range?.to
+    setDraft(range)
 
-    let nextDraft: DateRange | undefined = range
-
-    if (hadCompleteRange && nextFrom && nextTo && sameDay(nextFrom, prevFrom) && sameDay(nextTo, prevTo)) {
-      nextDraft = undefined
-    } else if (hadCompleteRange && nextFrom && nextTo) {
-      nextDraft = { from: nextFrom, to: undefined }
-    }
-
-    setDraft(nextDraft)
-
-    const hasBoth = Boolean(nextDraft?.from && nextDraft?.to)
-    if (hasBoth && !sameDay(nextDraft?.from, nextDraft?.to)) {
-      commit(nextDraft)
+    if (range?.from && range?.to && !sameDay(range.from, range.to)) {
+      commit(range)
       setOpen(false)
     }
   }

@@ -1,7 +1,7 @@
 import type { SyntheticEvent } from 'react'
 import { useState } from 'react'
-import { Button, Col, Container, Row } from 'react-bootstrap'
-import { Link, useNavigate } from 'react-router-dom'
+import { Col, Container, Row } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
 import FeatureHighlights from './FeatureHighlights'
 import './Home.css'
 import SearchPanel from './SearchPanel'
@@ -21,9 +21,6 @@ const HomeContainer = () => {
     <div className="home-page">
       <div className="hero-orb hero-orb-one" />
       <div className="hero-orb hero-orb-two" />
-      <Link to="/login" className="login-link-top-right text-decoration-none">
-        <Button variant="secondary" className="login-btn-subtle">Login</Button>
-      </Link>
       <Container className="home-shell">
         <div className="home-hero">
           <span className="hero-chip">Trusted by 120k+ travelers</span>
