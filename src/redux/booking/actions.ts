@@ -1,12 +1,23 @@
 import type { Dispatch } from 'redux'
-import { createBooking, getBookingById } from '../../api/hotelApi'
 import {
+    cancelBooking,
+    createBooking,
+    getBookingById,
+    getUserBookings,
+} from '../../api/hotelApi'
+import {
+    BOOKING_CANCEL_FAILURE,
+    BOOKING_CANCEL_REQUEST,
+    BOOKING_CANCEL_SUCCESS,
     BOOKING_CREATE_FAILURE,
     BOOKING_CREATE_REQUEST,
     BOOKING_CREATE_SUCCESS,
     BOOKING_FETCH_FAILURE,
     BOOKING_FETCH_REQUEST,
     BOOKING_FETCH_SUCCESS,
+    BOOKING_LIST_FAILURE,
+    BOOKING_LIST_REQUEST,
+    BOOKING_LIST_SUCCESS,
     BOOKING_RESET,
 } from './actionTypes'
 
@@ -51,6 +62,34 @@ export const fetchBookingAction = (bookingId: string) => {
       const message =
         error instanceof Error ? error.message : 'Unable to load booking'
       dispatch({ type: BOOKING_FETCH_FAILURE, payload: message })
+    }
+  }
+}
+
+export const fetchUserBookingsAction = (email: string) => {
+  return async (dispatch: Dispatch) => {
+    dispatch({ type: BOOKING_LIST_REQUEST })
+    try {
+      const data = await getUserBookings(email)
+      dispatch({ type: BOOKING_LIST_SUCCESS, payload: data })
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Unable to load bookings'
+      dispatch({ type: BOOKING_LIST_FAILURE, payload: message })
+    }
+  }
+}
+
+export const cancelBookingAction = (bookingId: string) => {
+  return async (dispatch: Dispatch) => {
+    dispatch({ type: BOOKING_CANCEL_REQUEST, payload: bookingId })
+    try {
+      const data = await cancelBooking(bookingId)
+      dispatch({ type: BOOKING_CANCEL_SUCCESS, payload: data })
+    } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Unable to cancel booking'
+      dispatch({ type: BOOKING_CANCEL_FAILURE, payload: message })
     }
   }
 }

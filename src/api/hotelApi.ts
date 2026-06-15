@@ -140,3 +140,59 @@ export const getBookingById = async (
     }, 350)
   })
 }
+
+export const getUserBookings = async (
+  email: string,
+): Promise<BookingConfirmation[]> => {
+  // TODO: Replace with real API call
+  // const response = await axiosInstance.get(API_ENDPOINTS.BOOKINGS.BY_USER(email))
+  // return response.data
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      try {
+        const raw = localStorage.getItem('hrb_bookings')
+        const list: BookingConfirmation[] = raw ? JSON.parse(raw) : []
+        const target = email.trim().toLowerCase()
+        const filtered = list
+          .filter((b) => b.guestEmail.toLowerCase() === target)
+          .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
+        resolve(filtered)
+      } catch {
+        resolve([])
+      }
+    }, 400)
+  })
+}
+
+export const cancelBooking = async (
+  bookingId: string,
+): Promise<BookingConfirmation> => {
+  // TODO: Replace with real API call
+  // const response = await axiosInstance.post(API_ENDPOINTS.BOOKINGS.CANCEL(bookingId))
+  // return response.data
+
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      try {
+        const raw = localStorage.getItem('hrb_bookings')
+        const list: BookingConfirmation[] = raw ? JSON.parse(raw) : []
+        const idx = list.findIndex((b) => b.bookingId === bookingId)
+        if (idx === -1) {
+          reject(new Error('Booking not found'))
+          return
+        }
+        const updated: BookingConfirmation = {
+          ...list[idx],
+          status: 'CANCELLED',
+          cancelledAt: new Date().toISOString(),
+        }
+        list[idx] = updated
+        localStorage.setItem('hrb_bookings', JSON.stringify(list))
+        resolve(updated)
+      } catch {
+        reject(new Error('Unable to cancel booking'))
+      }
+    }, 500)
+  })
+}

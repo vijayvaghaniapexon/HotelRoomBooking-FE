@@ -1,17 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Button, Container, Form, Spinner } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import {
-    createBookingAction,
-    resetBookingAction,
+  createBookingAction,
+  resetBookingAction,
 } from '../../redux/booking/actions'
 import {
-    fetchHotelDetailAction,
-    resetHotelDetailAction,
+  fetchHotelDetailAction,
+  resetHotelDetailAction,
 } from '../../redux/hotel/actions'
 import type { RootState } from '../../redux/rootReducer'
-import { getCurrentUser } from '../../utils/auth'
+import { getCurrentUser, hasAuthToken } from '../../utils/auth'
 import { EmptyState, Loader } from '../common'
 import './Booking.css'
 
@@ -32,6 +32,7 @@ const BookingConfirmContainer = () => {
   }>()
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
+  const location = useLocation()
   const dispatch = useDispatch()
 
   const checkIn = searchParams.get('checkIn') ?? ''
@@ -45,12 +46,22 @@ const BookingConfirmContainer = () => {
   )
 
   const currentUser = getCurrentUser()
+  const isAuthenticated = hasAuthToken()
 
   const [guestName, setGuestName] = useState(currentUser?.name ?? '')
   const [guestEmail, setGuestEmail] = useState(currentUser?.email ?? '')
   const [guests, setGuests] = useState(1)
 
   useEffect(() => {
+    if (isAuthenticated) return
+    const redirectTo = `${location.pathname}${location.search}`
+    navigate(`/login?redirectTo=${encodeURIComponent(redirectTo)}`, {
+      replace: true,
+    })
+  }, [isAuthenticated, location.pathname, location.search, navigate])
+
+  useEffect(() => {
+    if (!isAuthenticated) return
     if (!hotelId) return
     if (!detail || detail.id !== hotelId) {
       dispatch(fetchHotelDetailAction(hotelId, checkIn, checkOut) as never)
@@ -58,7 +69,7 @@ const BookingConfirmContainer = () => {
     return () => {
       dispatch(resetBookingAction())
     }
-  }, [dispatch, hotelId, checkIn, checkOut, detail])
+  }, [dispatch, hotelId, checkIn, checkOut, detail, isAuthenticated])
 
   useEffect(() => {
     return () => {
@@ -84,6 +95,11 @@ const BookingConfirmContainer = () => {
   }, [confirmation, navigate])
 
   const handleConfirm = () => {
+    if (!isAuthenticated) {
+      const redirectTo = `${location.pathname}${location.search}`
+      navigate(`/login?redirectTo=${encodeURIComponent(redirectTo)}`)
+      return
+    }
     if (!detail || !room) return
     dispatch(
       createBookingAction({
@@ -104,6 +120,8 @@ const BookingConfirmContainer = () => {
       }) as never,
     )
   }
+
+  if (!isAuthenticated) return null
 
   const isFormValid =
     guestName.trim().length > 1 &&

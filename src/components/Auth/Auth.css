@@ -85,6 +85,64 @@
   text-decoration: underline;
 }
 
+.auth-resend-btn {
+  color: #0b6f82 !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.auth-resend-btn:hover:not(:disabled) {
+  color: #09515f !important;
+  text-decoration: underline !important;
+}
+
+.auth-resend-btn:disabled {
+  color: #6f8a92 !important;
+  opacity: 0.85;
+  cursor: not-allowed;
+  text-decoration: none !important;
+}
+
+.auth-resend-toast {
+  margin-top: 0.9rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-align: center;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(-4px);
+  transition: opacity 0.25s ease, transform 0.25s ease, max-height 0.3s ease, margin-top 0.25s ease, padding 0.25s ease;
+}
+
+.auth-resend-toast.visible {
+  opacity: 1;
+  max-height: 80px;
+  transform: translateY(0);
+  margin-top: 0.9rem;
+  padding: 0.55rem 0.85rem;
+}
+
+.auth-resend-toast.is-success {
+  background: #e3f6ed;
+  color: #117a4d;
+  border: 1px solid #b8e6cf;
+}
+
+.auth-resend-toast.is-error {
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid #f5c4bf;
+}
+
 .auth-card .card-footer {
   border-top: 1px solid #e6eef0;
   background: #f8fcfd;

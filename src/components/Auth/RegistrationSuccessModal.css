@@ -1,0 +1,101 @@
+.registration-success-modal {
+  border: none !important;
+  border-radius: 22px !important;
+  overflow: hidden;
+  box-shadow: 0 28px 60px rgba(8, 35, 42, 0.4) !important;
+}
+
+.registration-success-badge {
+  width: 78px;
+  height: 78px;
+  margin: 0 auto 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 25%, #ffd7a8 0%, #ffb067 45%, #ef8354 100%);
+  box-shadow: 0 14px 30px rgba(239, 131, 84, 0.35);
+  animation: regSuccessPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.registration-success-badge::before,
+.registration-success-badge::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 176, 103, 0.5);
+}
+
+.registration-success-badge::before {
+  width: 10px;
+  height: 10px;
+  top: 10px;
+  right: 8px;
+}
+
+.registration-success-badge::after {
+  width: 7px;
+  height: 7px;
+  left: 10px;
+  bottom: 12px;
+}
+
+.registration-success-badge-symbol {
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+.registration-success-title {
+  font-weight: 800;
+  color: #143e48;
+  margin-bottom: 0.55rem;
+  font-size: 1.35rem;
+}
+
+.registration-success-msg {
+  color: #4a626a;
+  font-size: 0.97rem;
+  line-height: 1.55;
+  margin-bottom: 1.4rem;
+}
+
+.registration-success-msg strong {
+  color: #0b6f82;
+  word-break: break-all;
+}
+
+.registration-success-actions {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.registration-success-btn {
+  border-radius: 999px !important;
+  padding: 0.55rem 1.4rem !important;
+  font-weight: 700 !important;
+  min-width: 140px;
+}
+
+.registration-success-btn-primary {
+  background: linear-gradient(135deg, #0f8ea5 0%, #0b6f82 100%) !important;
+  border: none !important;
+  box-shadow: 0 10px 24px rgba(15, 142, 165, 0.35) !important;
+}
+
+.registration-success-btn-primary:hover {
+  background: linear-gradient(135deg, #0d8094 0%, #095e6e 100%) !important;
+}
+
+@keyframes regSuccessPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
