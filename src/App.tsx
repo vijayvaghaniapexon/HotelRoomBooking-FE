@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import { NavBar } from './components/common'
+import { NavBar, ProtectedRoute } from './components/common'
 import AdminDashboard from './pages/AdminDashboard'
 import BookingConfirm from './pages/BookingConfirm'
 import BookingSuccess from './pages/BookingSuccess'
@@ -36,7 +36,14 @@ const AppShell = () => {
           element={<BookingSuccess />}
         />
         <Route path="/my-bookings" element={<MyBookings />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute requiredRole="ADMIN">
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/manager" element={<ManagerDashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -57,3 +64,4 @@ const App = () => {
 }
 
 export default App
+

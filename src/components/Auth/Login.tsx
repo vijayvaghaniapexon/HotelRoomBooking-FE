@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { login } from '../../api/authApi'
-import { deriveNameFromEmail, deriveRoleFromEmail } from '../../utils/auth'
+import { deriveNameFromEmail, deriveRoleFromEmail, getDefaultRouteForRole, type UserRole } from '../../utils/auth'
 import { AuthLayout } from './AuthLayout'
 
 const AUTH_EVENT = 'hrb-auth-change'
@@ -27,7 +27,7 @@ export const Login = () => {
 
       if (res?.token) {
         const redirectTo = searchParams.get('redirectTo')
-        const role = res?.user?.role ?? deriveRoleFromEmail(trimmedEmail)
+        const role = String(res?.user?.role ?? deriveRoleFromEmail(trimmedEmail)).toUpperCase() as UserRole
         const name = res?.user?.name ?? deriveNameFromEmail(trimmedEmail)
         const emailValue = res?.user?.email ?? trimmedEmail
 
@@ -42,7 +42,7 @@ export const Login = () => {
           })
         )
         window.dispatchEvent(new Event(AUTH_EVENT))
-        navigate(redirectTo || '/', { replace: true })
+        navigate(redirectTo || getDefaultRouteForRole(role), { replace: true })
       }
 
       if (res?.message === 'Invalid email or password') {

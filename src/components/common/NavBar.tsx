@@ -42,6 +42,7 @@ const NavBar = () => {
   const hasToken = hasAuthToken()
   const displayName = user?.name || 'Guest'
   const isGuest = user?.role === 'GUEST'
+  const isAdmin = user?.role === 'ADMIN'
 
   return (
     <Navbar expand="md" className="app-navbar" variant="dark" sticky="top">
@@ -78,6 +79,15 @@ const NavBar = () => {
                 }
                 id="profile-nav-dropdown"
               >
+                {isAdmin && (
+                  <>
+                    <NavDropdown.Item as={Link} to="/admin">
+                      <span className="dd-icon" aria-hidden="true">🛠</span>
+                      Admin dashboard
+                    </NavDropdown.Item>
+                    <NavDropdown.Divider />
+                  </>
+                )}
                 {isGuest && (
                   <>
                     <NavDropdown.Item as={Link} to="/my-bookings">

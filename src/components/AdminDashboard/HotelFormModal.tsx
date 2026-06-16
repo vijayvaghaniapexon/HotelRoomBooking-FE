@@ -1,17 +1,20 @@
 import type { SyntheticEvent } from 'react'
 import { Button, Col, Form, Modal, Row } from 'react-bootstrap'
 import type { Hotel } from '../../types'
+import type { AssignableManager } from '../../api/userApi'
 
 interface HotelFormModalProps {
   show: boolean
   isEditing: boolean
   formState: Hotel
+  managerOptions: AssignableManager[]
+  managersLoading: boolean
   onChange: (field: keyof Hotel, value: string) => void
   onSave: (event: SyntheticEvent<HTMLFormElement>) => void
   onClose: () => void
 }
 
-const HotelFormModal = ({ show, isEditing, formState, onChange, onSave, onClose }: HotelFormModalProps) => {
+const HotelFormModal = ({ show, isEditing, formState, managerOptions, managersLoading, onChange, onSave, onClose }: HotelFormModalProps) => {
   return (
     <Modal show={show} onHide={onClose} size="lg" centered>
       <Modal.Header closeButton>
@@ -59,14 +62,25 @@ const HotelFormModal = ({ show, isEditing, formState, onChange, onSave, onClose 
             </Col>
             <Col md={4}>
               <Form.Group controlId="hotelManager">
-                <Form.Label>Manager ID <span className="text-danger">*</span></Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="e.g. MGR-123"
-                  value={formState.managerId}
+                <Form.Label>Assign Manager <span className="text-danger">*</span></Form.Label>
+                <Form.Select
+                  value={formState.managerId ?? ''}
                   onChange={(e) => onChange('managerId', e.target.value)}
+                  disabled={managersLoading}
                   required
-                />
+                >
+                  <option value="">Select a manager</option>
+                  {managerOptions.map((manager) => (
+                    <option key={manager.id} value={manager.id}>
+                      {manager.name} - {manager.email}
+                    </option>
+                  ))}
+                </Form.Select>
+                <Form.Text className="text-muted">
+                  {managersLoading
+                    ? 'Loading verified managers...'
+                    : 'Manager assignment is required.'}
+                </Form.Text>
               </Form.Group>
             </Col>
             <Col md={4}>
