@@ -1,14 +1,14 @@
 import type { SyntheticEvent } from 'react'
-import { useEffect, useState } from 'react'
-import { Button, Card, Col, Container, Row, Alert } from 'react-bootstrap'
+import { useCallback, useEffect, useState } from 'react'
+import { Alert, Button, Card, Col, Container, Row } from 'react-bootstrap'
+import { createHotel, deleteHotel, getAllHotels, updateHotel } from '../../api/hotelApi'
+import { getAssignableManagers, type AssignableManager } from '../../api/userApi'
 import type { Hotel } from '../../types'
 import './AdminDashboard.css'
 import { emptyHotel } from './data'
 import DeleteConfirmModal from './DeleteConfirmModal'
 import HotelFormModal from './HotelFormModal'
 import HotelTable from './HotelTable'
-import { getAllHotels, createHotel, updateHotel, deleteHotel } from '../../api/hotelApi'
-import { getAssignableManagers, type AssignableManager } from '../../api/userApi'
 
 const AdminDashboardContainer = () => {
   const [hotels, setHotels] = useState<Hotel[]>([])
@@ -17,21 +17,14 @@ const AdminDashboardContainer = () => {
   const [showModal, setShowModal] = useState(false)
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
-  const [loading, setLoading] = useState(false)
-  const [managersLoading, setManagersLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [managersLoading, setManagersLoading] = useState(true)
   const [managerOptions, setManagerOptions] = useState<AssignableManager[]>([])
   const [error, setError] = useState<string | null>(null)
   const itemsPerPage = 5
 
-  // Fetch hotels on component mount
-  useEffect(() => {
-    fetchHotels()
-    fetchAssignableManagers()
-  }, [])
-
-  const fetchHotels = async () => {
+  const fetchHotels = useCallback(async () => {
     try {
-      setLoading(true)
       setError(null)
       const data = await getAllHotels()
       setHotels(data)
@@ -42,11 +35,10 @@ const AdminDashboardContainer = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const fetchAssignableManagers = async () => {
+  const fetchAssignableManagers = useCallback(async () => {
     try {
-      setManagersLoading(true)
       const users = await getAssignableManagers()
       setManagerOptions(users)
     } catch (err) {
@@ -54,7 +46,17 @@ const AdminDashboardContainer = () => {
     } finally {
       setManagersLoading(false)
     }
-  }
+  }, [])
+
+  // Fetch hotels and manager options on component mount.
+  useEffect(() => {
+    const timerId = window.setTimeout(() => {
+      fetchHotels()
+      fetchAssignableManagers()
+    }, 0)
+
+    return () => window.clearTimeout(timerId)
+  }, [fetchHotels, fetchAssignableManagers])
 
   const openAddModal = () => {
     setFormState(emptyHotel)
