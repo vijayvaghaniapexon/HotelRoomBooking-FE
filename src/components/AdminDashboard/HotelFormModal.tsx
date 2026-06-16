@@ -11,7 +11,7 @@ interface HotelFormModalProps {
   onClose: () => void
 }
 
-const HotelFormModal = ({ show, isEditing, formState, onChange, onSave, onClose }: HotelFormModalProps) => {
+function HotelFormModal({ show, isEditing, formState, onChange, onSave, onClose }: HotelFormModalProps) {
   return (
     <Modal show={show} onHide={onClose} size="lg" centered>
       <Modal.Header closeButton>

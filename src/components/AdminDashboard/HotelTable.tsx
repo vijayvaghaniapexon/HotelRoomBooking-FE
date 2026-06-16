@@ -1,6 +1,6 @@
 import { Badge, Button, Card, Table } from 'react-bootstrap'
-import type { Hotel } from '../../types'
 import { TablePagination } from '../common'
+import type { Hotel } from '../../types'
 
 const renderStars = (count: number) => '★'.repeat(count) + '☆'.repeat(5 - count)
 
@@ -13,7 +13,7 @@ interface HotelTableProps {
   onDelete: (hotelId: string) => void
 }
 
-const HotelTable = ({ hotels, currentPage, itemsPerPage, onPageChange, onEdit, onDelete }: HotelTableProps) => {
+function HotelTable({ hotels, currentPage, itemsPerPage, onPageChange, onEdit, onDelete }: HotelTableProps) {
   const totalPages = Math.ceil(hotels.length / itemsPerPage)
   const paginatedHotels = hotels.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
 

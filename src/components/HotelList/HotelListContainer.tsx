@@ -2,14 +2,13 @@ import { useEffect } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
+import { EmptyState, Loader } from '../common'
 import { searchHotelsAction } from '../../redux/hotel/actions'
 import type { RootState } from '../../redux/rootReducer'
-import { EmptyState, Loader } from '../common'
-import HotelCard from './HotelCard'
 import './HotelList.css'
-import NoHotelsFound from './NoHotelsFound'
+import HotelCard from './HotelCard'
 
-const HotelListContainer = () => {
+function HotelListContainer() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -25,7 +24,7 @@ const HotelListContainer = () => {
   }, [dispatch, query, checkIn, checkOut])
 
   const handleViewRooms = (hotelId: string) => {
-    navigate(`/hotels/${hotelId}?checkIn=${checkIn}&checkOut=${checkOut}`)
+    navigate(`/hotels/${hotelId}/rooms?checkIn=${checkIn}&checkOut=${checkOut}`)
   }
 
   return (
@@ -48,13 +47,7 @@ const HotelListContainer = () => {
         {error && <EmptyState title="Something went wrong" message={error} />}
 
         {!loading && !error && hotels.length === 0 && (
-          <NoHotelsFound
-            query={query}
-            checkIn={checkIn}
-            checkOut={checkOut}
-            onClearFilters={() => navigate('/hotels')}
-            onBackToSearch={() => navigate('/')}
-          />
+          <EmptyState title="No hotels found" message="Try a different search term" />
         )}
 
         {!loading && hotels.length > 0 && (

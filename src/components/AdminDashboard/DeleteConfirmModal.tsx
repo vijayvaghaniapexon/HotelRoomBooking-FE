@@ -7,7 +7,7 @@ interface DeleteConfirmModalProps {
   onClose: () => void
 }
 
-const DeleteConfirmModal = ({ show, hotelName, onConfirm, onClose }: DeleteConfirmModalProps) => {
+function DeleteConfirmModal({ show, hotelName, onConfirm, onClose }: DeleteConfirmModalProps) {
   return (
     <Modal show={show} onHide={onClose} centered className="delete-modal">
       <Modal.Header closeButton>

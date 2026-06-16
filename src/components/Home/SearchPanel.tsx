@@ -1,6 +1,5 @@
 import type { SyntheticEvent } from 'react'
-import { Button, Card, Form } from 'react-bootstrap'
-import DateRangeField from './DateRangeField'
+import { Button, Card, Col, Form, Row } from 'react-bootstrap'
 
 interface SearchPanelProps {
   query: string
@@ -12,41 +11,50 @@ interface SearchPanelProps {
   onSearch: (e: SyntheticEvent<HTMLFormElement>) => void
 }
 
-const SearchPanel = ({
+function SearchPanel({
   query, checkIn, checkOut,
   onQueryChange, onCheckInChange, onCheckOutChange, onSearch,
-}: Readonly<SearchPanelProps>) => {
-  const handleSubmit = (e: SyntheticEvent<HTMLFormElement>) => {
-    if (!checkIn || !checkOut) {
-      e.preventDefault()
-      return
-    }
-    onSearch(e)
-  }
-
+}: SearchPanelProps) {
   return (
     <Card className="search-card">
       <Card.Body>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={onSearch}>
           <Form.Group className="mb-3">
-            <Form.Label>Where you want to go, To start your trip ?</Form.Label>
+            <Form.Label>Hotel Name / City</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter city"
+              placeholder="Enter hotel name or city"
               value={query}
               onChange={(e) => onQueryChange(e.target.value)}
               required
             />
           </Form.Group>
 
-          <div className="mb-4">
-            <DateRangeField
-              checkIn={checkIn}
-              checkOut={checkOut}
-              onCheckInChange={onCheckInChange}
-              onCheckOutChange={onCheckOutChange}
-            />
-          </div>
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-4">
+                <Form.Label>Check-in Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={checkIn}
+                  onChange={(e) => onCheckInChange(e.target.value)}
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-4">
+                <Form.Label>Check-out Date</Form.Label>
+                <Form.Control
+                  type="date"
+                  value={checkOut}
+                  onChange={(e) => onCheckOutChange(e.target.value)}
+                  min={checkIn}
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
 
           <Button type="submit" className="w-100 search-btn">
             Search Hotels

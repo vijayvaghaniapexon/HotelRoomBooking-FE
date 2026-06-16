@@ -11,7 +11,7 @@ interface RoomFormModalProps {
   onClose: () => void
 }
 
-const RoomFormModal = ({ show, isEditing, formState, onChange, onSave, onClose }: RoomFormModalProps) => {
+function RoomFormModal({ show, isEditing, formState, onChange, onSave, onClose }: RoomFormModalProps) {
   return (
     <Modal show={show} onHide={onClose} size="lg" centered>
       <Modal.Header closeButton>

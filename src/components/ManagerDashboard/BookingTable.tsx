@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Badge, Card, Table } from 'react-bootstrap'
-import type { Booking } from '../../types'
 import { TablePagination } from '../common'
+import type { Booking } from '../../types'
 
 interface BookingTableProps {
   bookings: Booking[]
 }
 
-const BookingTable = ({ bookings }: BookingTableProps) => {
+function BookingTable({ bookings }: BookingTableProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
   const totalPages = Math.ceil(bookings.length / itemsPerPage)

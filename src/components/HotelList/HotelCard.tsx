@@ -8,24 +8,9 @@ interface HotelCardProps {
 
 const renderStars = (count: number) => '★'.repeat(count) + '☆'.repeat(5 - count)
 
-const HotelCard = ({ hotel, onViewRooms }: Readonly<HotelCardProps>) => {
-  const handleCardClick = () => onViewRooms(hotel.id)
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault()
-      onViewRooms(hotel.id)
-    }
-  }
-
+function HotelCard({ hotel, onViewRooms }: HotelCardProps) {
   return (
-    <Card
-      className="hotel-card h-100"
-      role="button"
-      tabIndex={0}
-      onClick={handleCardClick}
-      onKeyDown={handleKeyDown}
-    >
+    <Card className="hotel-card h-100">
       <div className="hotel-cover-wrapper">
         <Card.Img variant="top" src={hotel.coverImage} className="hotel-cover" />
       </div>
@@ -36,13 +21,7 @@ const HotelCard = ({ hotel, onViewRooms }: Readonly<HotelCardProps>) => {
         <p className="hotel-price mt-auto">
           From <strong>₹{hotel.pricePerNight.toLocaleString()}</strong>/night
         </p>
-        <Button
-          className="view-rooms-btn"
-          onClick={(event) => {
-            event.stopPropagation()
-            onViewRooms(hotel.id)
-          }}
-        >
+        <Button className="view-rooms-btn" onClick={() => onViewRooms(hotel.id)}>
           View Rooms
         </Button>
       </Card.Body>

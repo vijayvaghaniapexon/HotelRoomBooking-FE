@@ -1,15 +1,15 @@
 import type { SyntheticEvent } from 'react'
 import { useState } from 'react'
 import { Button, Card, Col, Container, Row } from 'react-bootstrap'
+import './ManagerDashboard.css'
+import { emptyRoom, initialBookings, initialRooms } from './data'
 import type { Room } from '../../types'
 import BookingTable from './BookingTable'
 import DeleteConfirmModal from './DeleteConfirmModal'
-import './ManagerDashboard.css'
 import RoomFormModal from './RoomFormModal'
 import RoomTable from './RoomTable'
-import { emptyRoom, initialBookings, initialRooms } from './data'
 
-const ManagerDashboardContainer = () => {
+function ManagerDashboardContainer() {
   const [rooms, setRooms] = useState<Room[]>(initialRooms)
   const [formState, setFormState] = useState<Room>(emptyRoom)
   const [isEditing, setIsEditing] = useState(false)
