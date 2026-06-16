@@ -1,8 +1,8 @@
 import { mockHotelDetails } from '../components/HotelDetail/data'
 import { mockHotels } from '../components/HotelList/data'
-import type { BookingConfirmation, HotelDetail, HotelResult } from '../types'
-// import axiosInstance from './axiosConfig'
-// import { API_ENDPOINTS } from './endpoints'
+import type { BookingConfirmation, HotelDetail, HotelResult, Hotel } from '../types'
+import axiosInstance from './axiosConfig'
+import { API_ENDPOINTS } from './endpoints'
 
 interface SearchParams {
   query: string
@@ -62,6 +62,56 @@ export const getHotelDetail = async (params: DetailParams): Promise<HotelDetail>
       resolve({ ...hotel, rooms })
     }, 400)
   })
+}
+
+// Admin CRUD Operations
+export const getAllHotels = async (): Promise<Hotel[]> => {
+  try {
+    const response = await axiosInstance.get(API_ENDPOINTS.HOTELS.ALL)
+    return response.data
+  } catch (error) {
+    console.error('Error fetching hotels:', error)
+    throw error
+  }
+}
+
+export const getHotelById = async (hotelId: string): Promise<Hotel> => {
+  try {
+    const response = await axiosInstance.get(API_ENDPOINTS.HOTELS.DETAIL(hotelId))
+    return response.data
+  } catch (error) {
+    console.error('Error fetching hotel:', error)
+    throw error
+  }
+}
+
+export const createHotel = async (hotel: Omit<Hotel, 'id'>): Promise<Hotel> => {
+  try {
+    const response = await axiosInstance.post(API_ENDPOINTS.HOTELS.CREATE, hotel)
+    return response.data
+  } catch (error) {
+    console.error('Error creating hotel:', error)
+    throw error
+  }
+}
+
+export const updateHotel = async (hotelId: string, hotel: Partial<Hotel>): Promise<Hotel> => {
+  try {
+    const response = await axiosInstance.put(API_ENDPOINTS.HOTELS.UPDATE(hotelId), hotel)
+    return response.data
+  } catch (error) {
+    console.error('Error updating hotel:', error)
+    throw error
+  }
+}
+
+export const deleteHotel = async (hotelId: string): Promise<void> => {
+  try {
+    await axiosInstance.delete(API_ENDPOINTS.HOTELS.DELETE(hotelId))
+  } catch (error) {
+    console.error('Error deleting hotel:', error)
+    throw error
+  }
 }
 
 interface CreateBookingParams {

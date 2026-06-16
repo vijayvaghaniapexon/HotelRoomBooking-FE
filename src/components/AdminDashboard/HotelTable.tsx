@@ -1,11 +1,13 @@
 import { Badge, Button, Card, Table } from 'react-bootstrap'
 import type { Hotel } from '../../types'
+import type { AssignableManager } from '../../api/userApi'
 import { TablePagination } from '../common'
 
 const renderStars = (count: number) => '★'.repeat(count) + '☆'.repeat(5 - count)
 
 interface HotelTableProps {
   hotels: Hotel[]
+  managerOptions: AssignableManager[]
   currentPage: number
   itemsPerPage: number
   onPageChange: (page: number) => void
@@ -13,9 +15,10 @@ interface HotelTableProps {
   onDelete: (hotelId: string) => void
 }
 
-const HotelTable = ({ hotels, currentPage, itemsPerPage, onPageChange, onEdit, onDelete }: HotelTableProps) => {
+const HotelTable = ({ hotels, managerOptions, currentPage, itemsPerPage, onPageChange, onEdit, onDelete }: HotelTableProps) => {
   const totalPages = Math.ceil(hotels.length / itemsPerPage)
   const paginatedHotels = hotels.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+  const managerNameById = new Map(managerOptions.map((manager) => [manager.id, manager.name]))
 
   return (
     <Card className="shadow-sm">
@@ -54,7 +57,15 @@ const HotelTable = ({ hotels, currentPage, itemsPerPage, onPageChange, onEdit, o
                   <td className="fw-semibold">{hotel.name}</td>
                   <td>📍 {hotel.city}</td>
                   <td><span className="star-badge">{renderStars(hotel.starRating)}</span></td>
-                  <td><Badge bg="info" text="dark">{hotel.managerId}</Badge></td>
+                  <td>
+                    {hotel.managerId ? (
+                      <Badge bg="info" text="dark">
+                        {managerNameById.get(hotel.managerId) ?? 'Unknown manager'}
+                      </Badge>
+                    ) : (
+                      <span className="text-muted fst-italic">Unassigned</span>
+                    )}
+                  </td>
                   <td>
                     <div className="table-actions">
                       <Button size="sm" variant="outline-primary" onClick={() => onEdit(hotel)}>Edit</Button>

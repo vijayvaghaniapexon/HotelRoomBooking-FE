@@ -1,21 +1,60 @@
 import type { SyntheticEvent } from 'react'
-import { useState } from 'react'
-import { Button, Card, Col, Container, Row } from 'react-bootstrap'
+import { useEffect, useState } from 'react'
+import { Button, Card, Col, Container, Row, Alert } from 'react-bootstrap'
 import type { Hotel } from '../../types'
 import './AdminDashboard.css'
-import { emptyHotel, initialHotels } from './data'
+import { emptyHotel } from './data'
 import DeleteConfirmModal from './DeleteConfirmModal'
 import HotelFormModal from './HotelFormModal'
 import HotelTable from './HotelTable'
+import { getAllHotels, createHotel, updateHotel, deleteHotel } from '../../api/hotelApi'
+import { getAssignableManagers, type AssignableManager } from '../../api/userApi'
 
 const AdminDashboardContainer = () => {
-  const [hotels, setHotels] = useState<Hotel[]>(initialHotels)
+  const [hotels, setHotels] = useState<Hotel[]>([])
   const [formState, setFormState] = useState<Hotel>(emptyHotel)
   const [isEditing, setIsEditing] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [deleteId, setDeleteId] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const [loading, setLoading] = useState(false)
+  const [managersLoading, setManagersLoading] = useState(false)
+  const [managerOptions, setManagerOptions] = useState<AssignableManager[]>([])
+  const [error, setError] = useState<string | null>(null)
   const itemsPerPage = 5
+
+  // Fetch hotels on component mount
+  useEffect(() => {
+    fetchHotels()
+    fetchAssignableManagers()
+  }, [])
+
+  const fetchHotels = async () => {
+    try {
+      setLoading(true)
+      setError(null)
+      const data = await getAllHotels()
+      setHotels(data)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to fetch hotels'
+      setError(message)
+      console.error('Error fetching hotels:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchAssignableManagers = async () => {
+    try {
+      setManagersLoading(true)
+      const users = await getAssignableManagers()
+      setManagerOptions(users)
+    } catch (err) {
+      console.error('Error fetching assignable managers:', err)
+    } finally {
+      setManagersLoading(false)
+    }
+  }
 
   const openAddModal = () => {
     setFormState(emptyHotel)
@@ -38,25 +77,59 @@ const AdminDashboardContainer = () => {
     }))
   }
 
-  const handleSave = (event: SyntheticEvent<HTMLFormElement>) => {
+  const handleSave = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const nextHotel = {
-      ...formState,
-      id: isEditing ? formState.id : `hotel-${Date.now()}`,
+    try {
+      setError(null)
+      const managerId = formState.managerId?.trim() ?? ''
+      if (!managerId) {
+        setError('Please select a manager before saving.')
+        return
+      }
+
+      const hotelPayload: Hotel = {
+        ...formState,
+        managerId,
+      }
+
+      if (isEditing && formState.id) {
+        const updatedHotel = await updateHotel(formState.id, hotelPayload)
+        setHotels((current) =>
+          current.map((h) => (h.id === updatedHotel.id ? updatedHotel : h))
+        )
+      } else {
+        const newHotel = await createHotel(hotelPayload)
+        setHotels((current) => [newHotel, ...current])
+      }
+      closeModal()
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Failed to save hotel'
+      setError(message)
+      console.error('Error saving hotel:', err)
     }
-    setHotels((current) =>
-      isEditing
-        ? current.map((h) => (h.id === nextHotel.id ? nextHotel : h))
-        : [nextHotel, ...current]
-    )
-    closeModal()
   }
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (deleteId) {
-      setHotels((current) => current.filter((h) => h.id !== deleteId))
+      try {
+        setError(null)
+        await deleteHotel(deleteId)
+        setHotels((current) => current.filter((h) => h.id !== deleteId))
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Failed to delete hotel'
+        setError(message)
+        console.error('Error deleting hotel:', err)
+      }
     }
     setDeleteId(null)
+  }
+
+  if (loading && hotels.length === 0) {
+    return (
+      <Container fluid className="admin-dashboard">
+        <p>Loading hotels...</p>
+      </Container>
+    )
   }
 
   return (
@@ -69,6 +142,12 @@ const AdminDashboardContainer = () => {
           </p>
         </Col>
       </Row>
+
+      {error && (
+        <Alert variant="danger" onClose={() => setError(null)} dismissible>
+          {error}
+        </Alert>
+      )}
 
       <Card className="hero-card shadow">
         <Card.Body className="py-4">
@@ -90,6 +169,7 @@ const AdminDashboardContainer = () => {
 
       <HotelTable
         hotels={hotels}
+        managerOptions={managerOptions}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         onPageChange={setCurrentPage}
@@ -101,6 +181,8 @@ const AdminDashboardContainer = () => {
         show={showModal}
         isEditing={isEditing}
         formState={formState}
+        managerOptions={managerOptions}
+        managersLoading={managersLoading}
         onChange={handleChange}
         onSave={handleSave}
         onClose={closeModal}

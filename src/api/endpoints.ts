@@ -4,6 +4,10 @@ export const API_ENDPOINTS = {
   HOTELS: {
     SEARCH: '/hotels/search',
     DETAIL: (hotelId: string) => `/hotels/${hotelId}`,
+    ALL: '/hotels',
+    CREATE: '/hotels',
+    UPDATE: (hotelId: string) => `/hotels/${hotelId}`,
+    DELETE: (hotelId: string) => `/hotels/${hotelId}`,
   },
   BOOKINGS: {
     CREATE: '/bookings',
@@ -19,5 +23,8 @@ export const API_ENDPOINTS = {
     RESEND_OTP: '/auth/resend-otp',
     FORGOT_PASSWORD: '/auth/forgot-password',
     RESET_PASSWORD: '/auth/reset-password',
+  },
+  USER: {
+    ASSIGNABLE_MANAGERS: '/user/assignable-managers',
   }
 }

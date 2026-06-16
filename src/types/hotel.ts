@@ -5,7 +5,7 @@ export type Hotel = {
   starRating: number
   description: string
   coverImageUrl: string
-  managerId: string
+  managerId?: string | null
 }
 
 export interface HotelResult {
